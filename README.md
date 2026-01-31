@@ -79,6 +79,27 @@ In practice, this is how “learning” happens without fine‑tuning: the model
 
 ---
 
+## System architecture (high‑level)
+
+```mermaid
+flowchart TD
+  A[Request generator] --> B[Retriever]
+  B --> C[Patch store]
+  B --> D[Active patch set]
+  D --> E[Patch applier]
+  E --> F[Baseline model parser]
+  F --> G[Carrier rules / feedback]
+  G --> H[Patch generator + tests]
+  H --> C
+  F --> I[Trace store]
+  I --> B
+  F --> J[Metrics / golden set eval]
+```
+
+The system runs a closed loop: a request is parsed by a noisy baseline model, errors are surfaced by the carrier feedback, and those errors are converted into small, test‑gated patches that get stored and retrieved in later runs. Because improvements arrive through retrieved context rather than weight updates, performance gains are narrow and local: the model gets better only on patterns captured by patches, and it can still fail on unseen or ambiguous cases (or when patches overfit to the synthetic rules). This is intentional — the demo isolates the strengths and limitations of context‑driven iteration rather than claiming general intelligence.
+
+---
+
 ## What to look for in the output
 
 The report shows:
