@@ -180,6 +180,7 @@ This mirrors how you might evaluate a production change with a curated test suit
 
 ## Limitations (because it’s a toy)
 
+- the most important piece of this architecture is golden set creation, maintenance and extension; how to avoid human bottlenecks in the process is not covered. 
 - The “carrier API” is simulated, not real.
 - Patches are simple string‑trigger rules (no learned embeddings or complex logic).
 - The model is just parsing rules with noise, not a real LLM.
